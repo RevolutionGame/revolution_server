@@ -1,0 +1,27 @@
+{
+  "name": "revolutionserver",
+  "version": "1.0.0",
+  "description": "Rev api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RevolutionGame/revolution_server.git"
+  },
+  "author": "Stephen Pettus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RevolutionGame/revolution_server/issues"
+  },
+  "homepage": "https://github.com/RevolutionGame/revolution_server#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "hapi": "^17.6.0",
+    "joi": "^13.7.0",
+    "node-uuid": "^1.4.8",
+    "sequelize": "^4.39.0",
+    "underscore": "^1.9.1"
+  }
+}
