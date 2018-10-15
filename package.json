@@ -21,6 +21,7 @@
     "hapi": "^17.6.0",
     "joi": "^13.7.0",
     "node-uuid": "^1.4.8",
+    "passport": "^0.4.0",
     "sequelize": "^4.39.0",
     "underscore": "^1.9.1"
   }
