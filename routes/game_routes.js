@@ -1,6 +1,7 @@
 'use strict';
 
-var testController = require('../controllers/test_controller.js');
+var exportedMethods = require('../controllers/game_controller.js');
+var gameController = exportedMethods.getController;
 var Joi = require('joi');
 
 module.exports = function() {
@@ -10,7 +11,7 @@ module.exports = function() {
             path:'/v1/test/hello',
             config:{
               //auth:'token',
-              handler: testController.test
+              handler: gameController.test
             }
           },
           {
@@ -18,7 +19,7 @@ module.exports = function() {
             path:'/v1/test/hello2',
             config:{
               //auth:'token',
-              handler: testController.login
+              handler: gameController.login
             }
           }
         ];
