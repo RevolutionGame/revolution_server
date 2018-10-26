@@ -10,9 +10,10 @@ var models = require('../models');
 function TestController(){};
 
 TestController.prototype = (function(){
-
+   
 
     function testApi(request, h){
+        
         return 'Hello, world!';
     }
 

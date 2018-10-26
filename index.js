@@ -15,6 +15,7 @@ for (var route in routes) {
   }
   //server.connection({ routes: { cors: true } })
 
+
   server.start(function(){
     console.log("Server started");
   });
