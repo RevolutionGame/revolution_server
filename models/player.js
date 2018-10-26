@@ -1,3 +1,4 @@
+//indicates that the code should be executed in script mode
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {

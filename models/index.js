@@ -15,6 +15,7 @@ var sequelize = new Sequelize('Revolution_Db', 'root', 'showmetheway', {
   },
 });
 
+//creating array of models
 fs
   .readdirSync(__dirname)
   .filter(function(file){
@@ -25,17 +26,19 @@ fs
     db[model.name] = model;
   });
 
-sequelize.sync({ force: false }).then(res =>{
+  //sync the database
+  sequelize.sync({ force: true }).then(res =>{
     //console.log(res);
 
   });
 
-
+  //package up db models for export
   Object.keys(db).forEach(function(modelName){
     if("associate" in db[modelName]) {
       db[modelName].associate(db);
     }
   });
+  
   
   db.sequelize = sequelize;
   db.Sequelize = Sequelize;
