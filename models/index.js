@@ -3,6 +3,7 @@ var path = require("path");
 var db = {};
 var Sequelize = require('sequelize');
 
+//setup db connection
 var sequelize = new Sequelize('Revolution_Db', 'root', 'showmetheway', {
   host: 'localhost',
   dialect: 'mysql',
