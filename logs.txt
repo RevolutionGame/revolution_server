@@ -1,0 +1,100 @@
+2018-10-28T21:43:51.664696+00:00 app[web.1]: npm ERR!
+2018-10-28T21:43:51.664927+00:00 app[web.1]: npm ERR! Failed at the revolutionserver@1.0.0 start script.
+2018-10-28T21:43:51.665131+00:00 app[web.1]: npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+2018-10-28T21:43:51.686670+00:00 app[web.1]: 
+2018-10-28T21:43:51.686942+00:00 app[web.1]: npm ERR! A complete log of this run can be found in:
+2018-10-28T21:43:51.687118+00:00 app[web.1]: npm ERR!     /app/.npm/_logs/2018-10-28T21_43_51_667Z-debug.log
+2018-10-28T21:43:51.747173+00:00 heroku[web.1]: Process exited with status 1
+2018-10-28T21:43:51.767883+00:00 heroku[web.1]: State changed from starting to crashed
+2018-10-28T21:45:29.437010+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=revtest2018.herokuapp.com request_id=8b916ea5-806a-42e2-bd0d-b738ae0ca17b fwd="129.32.224.74" dyno= connect= service= status=503 bytes= protocol=https
+2018-10-28T21:45:53.008963+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=POST path="/v1/player/login" host=revtest2018.herokuapp.com request_id=80bccc3b-af1a-4952-99ed-6e88e12a922f fwd="73.81.121.202" dyno= connect= service= status=503 bytes= protocol=https
+2018-10-28T21:47:03.189858+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=revtest2018.herokuapp.com request_id=e24202d3-dc08-474f-8645-542aad2516fd fwd="73.81.121.202" dyno= connect= service= status=503 bytes= protocol=https
+2018-10-28T21:47:05.656939+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=revtest2018.herokuapp.com request_id=b48d6273-181c-45a1-be09-af014e9d2542 fwd="73.81.121.202" dyno= connect= service= status=503 bytes= protocol=https
+2018-10-28T21:49:57.764686+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/" host=revtest2018.herokuapp.com request_id=cb8f8e72-82d6-497d-a184-1fd721d6e01a fwd="104.60.105.64" dyno= connect= service= status=503 bytes= protocol=https
+2018-10-28T21:49:58.326491+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=GET path="/favicon.ico" host=revtest2018.herokuapp.com request_id=af661219-e905-4f44-ba07-f9c62205fe03 fwd="104.60.105.64" dyno= connect= service= status=503 bytes= protocol=https
+2018-10-28T21:51:18.000000+00:00 app[api]: Build started by user tug20864@temple.edu
+2018-10-28T21:51:32.653545+00:00 heroku[web.1]: State changed from crashed to starting
+2018-10-28T21:51:31.791139+00:00 app[api]: Release v6 created by user tug20864@temple.edu
+2018-10-28T21:51:32.000000+00:00 app[api]: Build succeeded
+2018-10-28T21:51:31.791139+00:00 app[api]: Deploy 00d43337 by user tug20864@temple.edu
+2018-10-28T21:51:37.394906+00:00 heroku[web.1]: Starting process with command `npm start`
+2018-10-28T21:51:41.752671+00:00 app[web.1]: 
+2018-10-28T21:51:41.752694+00:00 app[web.1]: > revolutionserver@1.0.0 start /app
+2018-10-28T21:51:41.752696+00:00 app[web.1]: > node index.js
+2018-10-28T21:51:41.752697+00:00 app[web.1]: 
+2018-10-28T21:51:44.352125+00:00 app[web.1]: Sun, 28 Oct 2018 21:51:44 GMT sequelize deprecated String based operators are now deprecated. Please use Symbol based operators for better security, read more at http://docs.sequelizejs.com/manual/tutorial/querying.html#operators at node_modules/sequelize/lib/sequelize.js:242:13
+2018-10-28T21:51:45.166811+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER auto_increment , `name` VARCHAR(255), `username` VARCHAR(255) UNIQUE, `cell_number` VARCHAR(255), `email` VARCHAR(255) UNIQUE, `password_hash` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2018-10-28T21:51:45.198597+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `players`
+2018-10-28T21:51:45.232067+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `playerAttrs` (`id` INTEGER auto_increment , `deviceToken` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `PlayerAttrId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`PlayerAttrId`) REFERENCES `players` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:51:45.240365+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `playerAttrs`
+2018-10-28T21:51:45.251721+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `shipTypes` (`id` INTEGER auto_increment , `type` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2018-10-28T21:51:45.259513+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `shipTypes`
+2018-10-28T21:51:45.265793+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `ships` (`id` INTEGER auto_increment , `speed` INTEGER, `handling` INTEGER, `armor` INTEGER, `filepath` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `ShipTypeId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`ShipTypeId`) REFERENCES `shipTypes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:51:45.277857+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `ships`
+2018-10-28T21:51:45.287157+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `playerShips` (`id` INTEGER auto_increment , `status` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `playerId` INTEGER, `shipId` INTEGER, UNIQUE `playerShips_shipId_playerId_unique` (`playerId`, `shipId`), PRIMARY KEY (`id`), FOREIGN KEY (`playerId`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`shipId`) REFERENCES `ships` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:51:45.299550+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `playerShips`
+2018-10-28T21:51:45.310071+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `weaponTypes` (`id` INTEGER auto_increment , `type` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2018-10-28T21:51:45.323847+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `weaponTypes`
+2018-10-28T21:51:45.337447+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `weapons` (`id` INTEGER auto_increment , `weapon_name` VARCHAR(255), `power` INTEGER, `filepath` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `WeaponTypeId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`WeaponTypeId`) REFERENCES `weaponTypes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:51:45.350997+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `weapons`
+2018-10-28T21:51:45.363549+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `playerWeapons` (`id` INTEGER auto_increment , `status` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `playerId` INTEGER, `weaponId` INTEGER, UNIQUE `playerWeapons_weaponId_playerId_unique` (`playerId`, `weaponId`), PRIMARY KEY (`id`), FOREIGN KEY (`playerId`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`weaponId`) REFERENCES `weapons` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:51:45.373823+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `playerWeapons`
+2018-10-28T21:52:37.975956+00:00 heroku[web.1]: Error R10 (Boot timeout) -> Web process failed to bind to $PORT within 60 seconds of launch
+2018-10-28T21:52:37.975956+00:00 heroku[web.1]: Stopping process with SIGKILL
+2018-10-28T21:52:38.153374+00:00 heroku[web.1]: Process exited with status 137
+2018-10-28T21:52:38.174989+00:00 heroku[web.1]: State changed from starting to crashed
+2018-10-28T21:52:39.611188+00:00 heroku[router]: at=error code=H10 desc="App crashed" method=POST path="/v1/player/login" host=revtest2018.herokuapp.com request_id=75c44a97-598b-4511-939a-de4520d5ccb5 fwd="73.81.121.202" dyno= connect= service= status=503 bytes= protocol=https
+2018-10-28T21:56:22.000000+00:00 app[api]: Build started by user tug20864@temple.edu
+2018-10-28T21:56:35.346682+00:00 app[api]: Release v7 created by user tug20864@temple.edu
+2018-10-28T21:56:35.346682+00:00 app[api]: Deploy 97052f69 by user tug20864@temple.edu
+2018-10-28T21:56:35.915922+00:00 heroku[web.1]: State changed from crashed to starting
+2018-10-28T21:56:36.000000+00:00 app[api]: Build succeeded
+2018-10-28T21:56:38.967212+00:00 heroku[web.1]: Starting process with command `npm start`
+2018-10-28T21:56:42.553884+00:00 app[web.1]: 
+2018-10-28T21:56:42.553952+00:00 app[web.1]: > revolutionserver@1.0.0 start /app
+2018-10-28T21:56:42.553954+00:00 app[web.1]: > node index.js
+2018-10-28T21:56:42.553956+00:00 app[web.1]: 
+2018-10-28T21:56:43.722457+00:00 app[web.1]: Sun, 28 Oct 2018 21:56:43 GMT sequelize deprecated String based operators are now deprecated. Please use Symbol based operators for better security, read more at http://docs.sequelizejs.com/manual/tutorial/querying.html#operators at node_modules/sequelize/lib/sequelize.js:242:13
+2018-10-28T21:56:44.257182+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER auto_increment , `name` VARCHAR(255), `username` VARCHAR(255) UNIQUE, `cell_number` VARCHAR(255), `email` VARCHAR(255) UNIQUE, `password_hash` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2018-10-28T21:56:44.271094+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `players`
+2018-10-28T21:56:44.292766+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `playerAttrs` (`id` INTEGER auto_increment , `deviceToken` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `PlayerAttrId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`PlayerAttrId`) REFERENCES `players` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:56:44.296632+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `playerAttrs`
+2018-10-28T21:56:44.306867+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `shipTypes` (`id` INTEGER auto_increment , `type` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2018-10-28T21:56:44.313369+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `shipTypes`
+2018-10-28T21:56:44.319384+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `ships` (`id` INTEGER auto_increment , `speed` INTEGER, `handling` INTEGER, `armor` INTEGER, `filepath` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `ShipTypeId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`ShipTypeId`) REFERENCES `shipTypes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:56:44.331300+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `ships`
+2018-10-28T21:56:44.340200+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `playerShips` (`id` INTEGER auto_increment , `status` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `playerId` INTEGER, `shipId` INTEGER, UNIQUE `playerShips_shipId_playerId_unique` (`playerId`, `shipId`), PRIMARY KEY (`id`), FOREIGN KEY (`playerId`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`shipId`) REFERENCES `ships` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:56:44.348431+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `playerShips`
+2018-10-28T21:56:44.354840+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `weaponTypes` (`id` INTEGER auto_increment , `type` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2018-10-28T21:56:44.359134+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `weaponTypes`
+2018-10-28T21:56:44.364459+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `weapons` (`id` INTEGER auto_increment , `weapon_name` VARCHAR(255), `power` INTEGER, `filepath` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `WeaponTypeId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`WeaponTypeId`) REFERENCES `weaponTypes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:56:44.370354+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `weapons`
+2018-10-28T21:56:44.376052+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `playerWeapons` (`id` INTEGER auto_increment , `status` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `playerId` INTEGER, `weaponId` INTEGER, UNIQUE `playerWeapons_weaponId_playerId_unique` (`playerId`, `weaponId`), PRIMARY KEY (`id`), FOREIGN KEY (`playerId`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`weaponId`) REFERENCES `weapons` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:56:44.383096+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `playerWeapons`
+2018-10-28T21:57:39.018519+00:00 heroku[web.1]: Error R10 (Boot timeout) -> Web process failed to bind to $PORT within 60 seconds of launch
+2018-10-28T21:57:39.018752+00:00 heroku[web.1]: Stopping process with SIGKILL
+2018-10-28T21:57:39.140883+00:00 heroku[web.1]: Process exited with status 137
+2018-10-28T21:57:39.185723+00:00 heroku[web.1]: State changed from starting to crashed
+2018-10-28T21:57:39.187970+00:00 heroku[web.1]: State changed from crashed to starting
+2018-10-28T21:57:41.998242+00:00 heroku[web.1]: Starting process with command `npm start`
+2018-10-28T21:57:45.984736+00:00 app[web.1]: 
+2018-10-28T21:57:45.984754+00:00 app[web.1]: > revolutionserver@1.0.0 start /app
+2018-10-28T21:57:45.984756+00:00 app[web.1]: > node index.js
+2018-10-28T21:57:45.984757+00:00 app[web.1]: 
+2018-10-28T21:57:47.289731+00:00 app[web.1]: Sun, 28 Oct 2018 21:57:47 GMT sequelize deprecated String based operators are now deprecated. Please use Symbol based operators for better security, read more at http://docs.sequelizejs.com/manual/tutorial/querying.html#operators at node_modules/sequelize/lib/sequelize.js:242:13
+2018-10-28T21:57:47.778385+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `players` (`id` INTEGER auto_increment , `name` VARCHAR(255), `username` VARCHAR(255) UNIQUE, `cell_number` VARCHAR(255), `email` VARCHAR(255) UNIQUE, `password_hash` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2018-10-28T21:57:47.789140+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `players`
+2018-10-28T21:57:47.811385+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `playerAttrs` (`id` INTEGER auto_increment , `deviceToken` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `PlayerAttrId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`PlayerAttrId`) REFERENCES `players` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:57:47.826116+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `playerAttrs`
+2018-10-28T21:57:47.845104+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `shipTypes` (`id` INTEGER auto_increment , `type` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2018-10-28T21:57:47.857383+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `shipTypes`
+2018-10-28T21:57:47.881806+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `ships` (`id` INTEGER auto_increment , `speed` INTEGER, `handling` INTEGER, `armor` INTEGER, `filepath` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `ShipTypeId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`ShipTypeId`) REFERENCES `shipTypes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:57:47.895122+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `ships`
+2018-10-28T21:57:47.911644+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `playerShips` (`id` INTEGER auto_increment , `status` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `playerId` INTEGER, `shipId` INTEGER, UNIQUE `playerShips_shipId_playerId_unique` (`playerId`, `shipId`), PRIMARY KEY (`id`), FOREIGN KEY (`playerId`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`shipId`) REFERENCES `ships` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:57:47.921465+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `playerShips`
+2018-10-28T21:57:47.939076+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `weaponTypes` (`id` INTEGER auto_increment , `type` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB;
+2018-10-28T21:57:47.950853+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `weaponTypes`
+2018-10-28T21:57:47.969427+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `weapons` (`id` INTEGER auto_increment , `weapon_name` VARCHAR(255), `power` INTEGER, `filepath` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `WeaponTypeId` INTEGER, PRIMARY KEY (`id`), FOREIGN KEY (`WeaponTypeId`) REFERENCES `weaponTypes` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:57:47.977565+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `weapons`
+2018-10-28T21:57:47.986777+00:00 app[web.1]: Executing (default): CREATE TABLE IF NOT EXISTS `playerWeapons` (`id` INTEGER auto_increment , `status` VARCHAR(255), `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, `playerId` INTEGER, `weaponId` INTEGER, UNIQUE `playerWeapons_weaponId_playerId_unique` (`playerId`, `weaponId`), PRIMARY KEY (`id`), FOREIGN KEY (`playerId`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (`weaponId`) REFERENCES `weapons` (`id`) ON DELETE CASCADE ON UPDATE CASCADE) ENGINE=InnoDB;
+2018-10-28T21:57:47.997460+00:00 app[web.1]: Executing (default): SHOW INDEX FROM `playerWeapons`
