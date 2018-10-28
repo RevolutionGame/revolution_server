@@ -4,7 +4,7 @@ var db = {};
 var Sequelize = require('sequelize');
 
 //setup db connection
-var sequelize = new Sequelize('Revolution_Db', 'root', 'showmetheway', {
+var sequelize = new Sequelize('Revolution_Db', 'root', '', {
   host: 'localhost',
   dialect: 'mysql',
 
