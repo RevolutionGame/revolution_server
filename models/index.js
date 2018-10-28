@@ -3,7 +3,7 @@ var path = require("path");
 var db = {};
 var Sequelize = require('sequelize');
 
-var config = require(__dirname + '/../config/config.json')["env"];
+var config = require(__dirname + '../../config/config.json')["env"];
 
 //setup db connection
 var sequelize = new Sequelize(config.database, config.username, config.password, {
