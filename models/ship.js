@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         Ship.associate = function(models) {
 
             Ship.belongsToMany(models.players, { through: models.playerShips });
+
+            Ship.belongsTo(models.shipTypes, {as: 'ShipType'}); 
+            
           
           }
 

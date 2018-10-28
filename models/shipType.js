@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
 
         ShipType.associate = function(models) {
 
-            ShipType.hasOne(models.ships, {as: 'ShipType', foreignKey : 'shipTypeId'});
+            //ShipType.hasOne(models.ships, {as: 'ShipType', foreignKey : 'shipTypeId'});
+
+            //User.belongsTo(Company, {foreignKey: 'fk_company'}); 
+
+            //ShipType.belongsTo(models.ships, { as: 'ShipType' })
           
           }
 
