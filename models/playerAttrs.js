@@ -10,11 +10,6 @@ module.exports = (sequelize, DataTypes) => {
           deviceToken: DataTypes.STRING
         },{});
 
-        PlayerAttr.associate = function(models) {
-
-            PlayerAttr.hasOne(models.players, {as: 'PlayerAttr', foreignKey : 'playerAttrId'});
-          
-          }
 
         return PlayerAttr;
 };

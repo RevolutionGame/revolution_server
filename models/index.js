@@ -3,10 +3,12 @@ var path = require("path");
 var db = {};
 var Sequelize = require('sequelize');
 
+var config = require(__dirname + '/../config/config.json')["dev"];
+
 //setup db connection
-var sequelize = new Sequelize('Revolution_Db', 'root', 'showmetheway', {
-  host: 'localhost',
-  dialect: 'mysql',
+var sequelize = new Sequelize(config.database, config.username, config.password, {
+  host: config.host,
+  dialect: config.dialect,
 
   pool: {
     max: 5,

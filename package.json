@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/RevolutionGame/revolution_server#readme",
   "dependencies": {
+    "crypto": "^1.0.1",
     "fs": "0.0.1-security",
     "hapi": "^17.6.0",
     "joi": "^13.7.0",
