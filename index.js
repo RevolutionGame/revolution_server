@@ -2,7 +2,7 @@ var Hapi = require('hapi');
 
 var server = new Hapi.Server({
     port: 3004,
-    host: 'localhost',
+    host: '0.0.0.0',
     routes: { cors: true }
 });
 
