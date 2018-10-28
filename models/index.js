@@ -30,7 +30,7 @@ fs
   });
 
   //sync the database
-  sequelize.sync({ force: true }).then(res =>{
+  sequelize.sync({ force: false }).then(res =>{
     //console.log(res);
 
   });
