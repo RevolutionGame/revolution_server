@@ -12,17 +12,21 @@ function GameController(){};
 
 GameController.prototype = (function(){
 
-    function testApi(request, h){
-        return 'Hello, world!';
+    function findclassicgame(request, h){
+        //code to check for open game in database
+
+        return 'gameroomid';
     }
 
-    function login(request, h){
-        return 'Hello, world2!';
+    function findarcadegame(request, h){
+        //code to check for open game in database
+
+        return 'gameroomid';
     }
 
     return {
-        test: testApi,
-        login: login
+        joinclassic: findclassicgame,
+        joinarcade: findarcadegame
     }
 })();
 
@@ -31,29 +35,36 @@ var gameController = new GameController();
 module.exports = {
     getController: gameController,
     
+    //could just put an array here as a temporary solution of storing users in a room
     socketInfo: function(server, io){
-        //put socket things here, ie onConnection method. otherwise the onConnection would be added everytiem the api call is made efefctively addinf an "onConnection" handler for every player. We only want the server to have one "onConnection" handler
         io.on('connection', function(socket){
-
+            console.log("connected");
             socket.on("ROOM_INFO", function(data){
                 var roomId = data.roomId;
                 socket.join(roomId);
 
+                console.log("received room info");
                 var room = io.sockets.adapter.rooms[data.roomId];
                 var roomSize = room.length;
-                if(roomSize == 1){
-                    io.in(data.roomId).emit('GAME_START', 'the game is starting');
+                if(roomSize == 2){
+                    //socket.emit('TEST', data);
+                    //socket.emit('GAME_START', 'the game is starting');
+                    io.in(data.roomId).emit('GAME_START', data);
                 }
             });
 
-            socket.emit("CONNECTION_SUCCESS");
+            socket.on("LOCATION_DATA", function(data){
+                var roomId = data.roomId;
 
+                console.log("received location data");
 
-
-            socket.on('chat message', function(msg){
-            socket.broadcast.emit('chat message', msg);
-            console.log(msg);
+                socket.to(data.roomId).emit('LOCATION_DATA', data);
             });
+
+            socket.emit("CONNECTION_SUCCESS");
+            console.log("emitted connection success");
+
+
             socket.on('disconnect', function(){
             console.log('disconnected');
             });

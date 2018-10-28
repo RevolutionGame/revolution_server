@@ -7,19 +7,19 @@ var Joi = require('joi');
 module.exports = function() {
     return [
         {
-            method:'GET',
-            path:'/v1/test/hello',
+            method:'POST',
+            path:'/v1/game/joinclassic',
             config:{
               //auth:'token',
-              handler: gameController.test
+              handler: gameController.joinclassic
             }
           },
           {
             method:'GET',
-            path:'/v1/test/hello2',
+            path:'/v1/game/joinarcade',
             config:{
               //auth:'token',
-              handler: gameController.login
+              handler: gameController.joinarcade
             }
           }
         ];
