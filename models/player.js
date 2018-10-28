@@ -26,12 +26,18 @@ module.exports = (sequelize, DataTypes) => {
             }
         },{});
 
-
+        //create association between player and ships (CREATE JOIN TABLE)
         Player.associate = function(models) {
 
             Player.belongsToMany(models.ships, { through: models.playerShips });
-          
-          }
+
+        }
+        Player.associate = function(models) {
+
+        //Create association between player and weapons (CREATE JOIN TABLE)
+        Player.belongsToMany(models.weapons, { through: models.playerWeapons });
+
+        }  
 
           return Player;
 };
