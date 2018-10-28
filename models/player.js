@@ -31,13 +31,10 @@ module.exports = (sequelize, DataTypes) => {
 
             Player.belongsToMany(models.ships, { through: models.playerShips });
 
+            Player.belongsToMany(models.weapons, { through: models.playerWeapons });
+
         }
-        Player.associate = function(models) {
-
-        //Create association between player and weapons (CREATE JOIN TABLE)
-        Player.belongsToMany(models.weapons, { through: models.playerWeapons });
-
-        }  
+ 
 
           return Player;
 };

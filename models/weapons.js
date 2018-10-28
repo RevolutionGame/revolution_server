@@ -9,35 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         weapon_name: DataTypes.STRING,
         power: DataTypes.INTEGER,
-        filepath: DataTypes.STRING,
-
-
-
-        //add forgien key from weapons type for name
-        
-        type: {
-            type: DataTypes.INTEGER,
-            references: {
-              model: 'weapon_types',
-              key: 'id' 
-            }
-            }, 
-
-        
-
-
-
-        created_at: {
-            allowNull: false,
-            type: DataTypes.DATE,
-            defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
-            },
-
-        updated_at: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
-        }
+        filepath: DataTypes.STRING
 
         },{});
 
@@ -45,6 +17,8 @@ module.exports = (sequelize, DataTypes) => {
         Weapons.associate = function(models) {
 
             Weapons.belongsToMany(models.players, { through: models.playerWeapons });
+
+            Weapons.belongsTo(models.weaponTypes, {as: 'WeaponType'}); 
 
         }
 

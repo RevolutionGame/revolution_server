@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-    const WeaponTypes = sequelize.define('weapon_types', {
+    const WeaponTypes = sequelize.define('weaponTypes', {
             
         id: {
             type: DataTypes.INTEGER,
