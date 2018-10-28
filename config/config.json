@@ -1,0 +1,16 @@
+{
+    "env": {
+        "dialect": "mysql",
+        "username": "b6f12960778cc3",
+        "host":"us-cdbr-iron-east-01.cleardb.net",
+        "password": "1bb5d6a7",
+        "database": "heroku_3a138fede8f7e94"
+    },
+    "dev": {
+      "dialect": "mysql",
+      "username": "root",
+      "host":"localhost",
+      "password": "showmetheway",
+      "database": "Revolution_Db"
+    }
+  }
