@@ -53,6 +53,11 @@ module.exports = {
                 }
             });
 
+            socket.on("TEST_DATA", function(data){
+                console.log("received test data");
+                socket.emit('TEST_DATA', data);
+            });
+
             socket.on("LOCATION_DATA", function(data){
                 var roomId = data.roomId;
 
