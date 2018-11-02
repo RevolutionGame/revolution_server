@@ -32,6 +32,19 @@ GameController.prototype = (function(){
 
 var gameController = new GameController();
 
+
+
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+async function manageGame(roomId, io){
+    for(var k = 0; k < 200; k++){
+        await sleep(2000);
+        //do stuff
+    }
+}
+
+var games = [];
 module.exports = {
     getController: gameController,
     
@@ -49,7 +62,9 @@ module.exports = {
                 if(roomSize == 2){
                     //socket.emit('TEST', data);
                     //socket.emit('GAME_START', 'the game is starting');
+                    manageGame(data.roomId, io);
                     io.in(data.roomId).emit('GAME_START', data);
+
                 }
             });
 
