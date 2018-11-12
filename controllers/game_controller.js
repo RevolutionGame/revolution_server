@@ -232,13 +232,14 @@ module.exports = {
                 console.log("received room info");
                 var room = io.sockets.adapter.rooms[data.roomId];
                 var roomSize = room.length;
-                if(roomSize == 4){
+                if(roomSize === 2){
                     //socket.emit('TEST', data);
                     //socket.emit('GAME_START', 'the game is starting');
 
                     initializeGame(data);
                     
-                    io.in(data.roomId).emit('GAME_START', data);
+                    var obj = dataDumpMap.get(data.roomId);
+                    io.in(data.roomId).emit('FORCE_GAME_START', obj);
 
                     manageGame(data.roomId, io);
                 }
