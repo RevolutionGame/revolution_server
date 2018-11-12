@@ -35,6 +35,7 @@ GameController.prototype = (function(){
 var gameController = new GameController();
 
 
+var numPlayers = 1;
 
 const sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -54,11 +55,25 @@ async function manageGame(roomId, io){
     gameInstance.properties["active"] = true;
 
     var myLock = gameInstance.lock;
-    while(gameInstance.properties.active == true){
-        await sleep(2000);
-        //myLock.acquire(roomId, generateAsteroids);
-        generateAsteroids(gameInstance, dumpObj);
-        io.in(roomId).emit("DATA_DUMP_TEST", dataDumpMap.get(roomId));
+    var count = 0;
+    var started = false;
+    while(gameInstance.properties.active == true && !started){
+        await sleep(10);
+        if(gameInstance.properties.hasOwnProperty("playersReady") && gameInstance.properties.playersReady === numPlayers){
+            started = true;
+            console.log("here2");
+            while(gameInstance.properties.active == true){
+                await sleep(10);
+                //myLock.acquire(roomId, generateAsteroids);
+                if(count % 200 === 199){
+                    generateAsteroids(gameInstance, dumpObj);
+                }
+                count++;
+                console.log("here3");
+                io.in(roomId).emit("DATA_DUMP_TEST", dataDumpMap.get(roomId));
+            }
+        }
+        
     }
 }
 function generateAsteroids(gameInstance, dumpObj){
@@ -82,7 +97,7 @@ function generateAsteroids(gameInstance, dumpObj){
 
 function initializeGame(data){
     gameInstanceMap.set(data.roomId, {lock: new AsyncLock(), currentAsteroidId: 0}/** A variable holding data about the game instance. This data can be accesssed from the manageGame function or wherever else*/);
-    dataDumpMap.set(data.roomId, {ships: [], asteroids: [], events: []});
+    dataDumpMap.set(data.roomId, {roomId: data.roomId, ships: [], asteroids: [], events: []});
     currentGameId++;
 
     var ships = dataDumpMap.get(data.roomId)["ships"];
@@ -112,7 +127,9 @@ function playerHitAsteroid(theEvent, dumpObj){
 
 }
 function playerDestroyedAsteroid(theEvent, dumpObj){
-
+    var dumpPlayer = obj["ships"].find(function(elmt){
+        return elmt.userId === this;
+    }, givenPlayerLocation.userId);
 }
 function playerShotShip(theEvent, dumpObj){
 
@@ -120,16 +137,18 @@ function playerShotShip(theEvent, dumpObj){
 
 function updateData(data){
     var roomId = data.roomId;
+    console.log("In update data object: " + data);
+    console.log("In update room id: " + roomId);
     var givenPlayerLocation = data.location;
 
     var obj = dataDumpMap.get(roomId);
 
-
-    var dumpPlayer = obj.ships.find(function(elmt){//this method finds the player with the given id in the ships array
-        if(elmt === this){
-            return elmt;
-        }
-    }, playerLocation.userId);//specifies that "this" within the callback function should refer to playerLocation.userId
+    console.log("givenPlayerLocation.userId: " + givenPlayerLocation.userId);
+    console.log("Ships: " + obj["ships"]);
+    var dumpPlayer = obj["ships"].find(function(elmt){//this method finds the player with the given id in the ships array
+        return elmt.userId === this;
+    }, givenPlayerLocation.userId);//specifies that "this" within the callback function should refer to playerLocation.userId
+    console.log("Dump player: " + dumpPlayer);
     dumpPlayer.locationX = givenPlayerLocation.locationX;
     dumpPlayer.locationY = givenPlayerLocation.locationY;
     dumpPlayer.angleInDegrees = givenPlayerLocation.angleInDegrees;
@@ -185,13 +204,13 @@ module.exports = {
                     gameSetupMap.get(data.roomId)["playerIds"].add(data.userId);
                 }else{
                     gameSetupMap.set(data.roomId, {playerIds: []});
-                    gameSetupMap.get(data.roomId)["playerIds"].add(data.userId);
+                    gameSetupMap.get(data.roomId)["playerIds"].push(data.userId);
                 }
 
                 console.log("received room info");
                 var room = io.sockets.adapter.rooms[data.roomId];
                 var roomSize = room.length;
-                if(roomSize == 2){
+                if(roomSize == 4){
                     //socket.emit('TEST', data);
                     //socket.emit('GAME_START', 'the game is starting');
 
@@ -207,7 +226,9 @@ module.exports = {
                 console.log("force game start");
                 initializeGame(data);
                 
-                io.in(data.roomId).emit('FORCE_GAME_START', data);
+                var obj = dataDumpMap.get(data.roomId);
+
+                io.in(data.roomId).emit('FORCE_GAME_START', obj);
                 manageGame(data.roomId, io);
             });
 
@@ -218,15 +239,27 @@ module.exports = {
             socket.on("GAME_FORCE_STARTED", function(data){
                 console.log("Game Force started: " + gameInstanceMap.get(data.roomId));
                 console.log("The roomId: " + data.roomId);
+                var gameInstance = gameInstanceMap.get(data.roomId);
+                if(gameInstance.properties.hasOwnProperty("playersReady")){
+                    console.log("doesn't create playersReady");
+                    gameInstance.properties.playersReady = gameInstance.properties.playersReady + 1;
+                }else{
+                    console.log("creates playersReady");
+                    gameInstance.properties["playersReady"] = 0;
+                    gameInstance.properties.playersReady = gameInstance.properties.playersReady + 1;
+                }
                 //socket.emit("DATA_DUMP_TEST", dataDumpMap.get(data.roomId));
             });
 
             socket.on("CLIENT_DATA", function(data){
                 //record client data
+                console.log("In CLIENT_DATA callback data: " + data);
+                console.log("In CLIENT_DATA callback roomId: " + data.roomId);
                 updateData(data);
 
                 //send back the data dump
-                io.in(data.roomId).emit("ALL_DATA", dataDumpMap.get(data.roomId));
+                io.in(data.roomId).emit("DATA_DUMP_TEST", dataDumpMap.get(roomId));
+                //io.in(data.roomId).emit("ALL_DATA", dataDumpMap.get(data.roomId));
             });
 
             socket.on("TEST_DATA", function(data){
