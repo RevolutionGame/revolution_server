@@ -78,10 +78,22 @@ async function manageGame(roomId, io){
 }
 function generateAsteroids(gameInstance, dumpObj){
     var asteroids = dumpObj.asteroids;
-    var randX, randY, degrees;
+    var randX, randY, degrees, negative, side;
     for(var k = 0; k < 3; k++){
-        randX = Math.floor(Math.random() * 500);
-        randY = Math.floor(Math.random() * 500);
+        side =  Math.floor(Math.random() * 2);
+
+        if(side === 1){
+            randX = -8;
+        }else{
+            randX = 8;
+        }
+
+        negative = Math.floor(Math.random() * 2);
+        randY = Math.floor(Math.random() * 4);
+        if(negative === 1){
+            randY = -randY;
+        }
+
         degrees = Math.floor(Math.random() * 360);
 
         asteroids.push({
@@ -105,10 +117,20 @@ function initializeGame(data){
     var players = gameSetupMap.get(data.roomId)["playerIds"];
 
     //determine the players' initial positions
-    var randX, randY, degrees;
+    var randX, randY, degrees, negative;
     for(var k = 0; k < players.length; k++){
-        randX = Math.floor(Math.random() * 500);
-        randY = Math.floor(Math.random() * 500);
+        negative = Math.floor(Math.random() * 2);
+        randX = Math.floor(Math.random() * 7);
+        if(negative === 1){
+            randX = -randX;
+        }
+
+        negative = Math.floor(Math.random() * 2);
+        randY = Math.floor(Math.random() * 3);
+        if(negative === 1){
+            randY = -randY;
+        }
+
         degrees = Math.floor(Math.random() * 360);
 
         ships.push({
