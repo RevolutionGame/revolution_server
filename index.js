@@ -21,7 +21,7 @@ for (var route in routes) {
   var io = require('socket.io')(server.listener); 
   var controllerExportMethods = require('./controllers/game_controller');
   controllerExportMethods.socketInfo(server, io);
-
+//server start test
   server.start(function(){
     console.log("Server started");
   });
