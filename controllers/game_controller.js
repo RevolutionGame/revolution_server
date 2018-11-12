@@ -223,7 +223,7 @@ module.exports = {
                 socket.join(roomId);
 
                 if(gameSetupMap.has(data.roomId)){
-                    gameSetupMap.get(data.roomId)["playerIds"].add(data.userId);
+                    gameSetupMap.get(data.roomId)["playerIds"].push(data.userId);
                 }else{
                     gameSetupMap.set(data.roomId, {playerIds: []});
                     gameSetupMap.get(data.roomId)["playerIds"].push(data.userId);
