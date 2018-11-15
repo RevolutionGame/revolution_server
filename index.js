@@ -1,5 +1,5 @@
 var Hapi = require('hapi');
-const passportSetup = require('./config/passport_setup');
+const passportSetup = require('./oauthConfig/passport_setup');
 
 
 var server = new Hapi.Server({
