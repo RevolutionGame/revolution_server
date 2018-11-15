@@ -9,7 +9,8 @@ passport.use(
             //options for google strat
             clientID: keys.google.clientID,
             clientSecret:keys.google.clientSecret
-        }), () =>{
+        }, () =>{
             //passport callback function
         }//end lambda
-);
+    )//end google strategy
+)
