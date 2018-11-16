@@ -1,6 +1,5 @@
-'use strict';
-
 var Joi = require('joi');
+const passport = require('passport');
 
 
 module.exports = function() {
@@ -17,10 +16,12 @@ module.exports = function() {
             {
                 method: 'GET',
                 path: '/auth/google',
-                handler: function() {
-                    var passport = request.server.plugins.passport;
-                    return passport.Authenticator('google', { scope: ['profile']});
-                }//end handler
+                handler: function(request, h) {
+                    var googleAuth = request.server.plugins.passprt;
+                    googleAuth.authenticate(  'google',   {scope: ['profile']}  );
+                    //return passport.Authenticator(  'google', {scope: ['profile']}  );
+                    //passport.authenticate(   'google',   {scope: ['profile']}     );
+                }//end function
                 
             },//end
 
