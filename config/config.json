@@ -10,7 +10,7 @@
       "dialect": "mysql",
       "username": "root",
       "host":"localhost",
-      "password": "showmetheway",
+      "password": "",
       "database": "Revolution_Db"
     }
   }
