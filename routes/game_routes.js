@@ -22,5 +22,6 @@ module.exports = function() {
               handler: gameController.joinarcade
             }
           }
+
         ];
     }(); //end module.exports
