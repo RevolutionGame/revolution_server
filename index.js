@@ -40,6 +40,7 @@ const start = async () => {
     isSecure: false //Should be set to true (which is the default) in production
 });
 
+  //TWITTER AUTH STRATEGY
   server.auth.strategy('twitter', 'bell', {
     provider: 'twitter',
     scope(request) {
@@ -60,6 +61,15 @@ const start = async () => {
     isSecure: false     // Terrible idea but required if not using HTTPS especially if developing locally
 });
 
+//GOOGLE AUTH STRATEGY
+server.auth.strategy('google', 'bell', {
+  provider: 'google',
+  password: 'cookie_encryption_password_secure',
+  isSecure: false,
+  clientId: '678432058435-i32ca9r52summcjtht1ams6a6j45davf.apps.googleusercontent.com',
+  clientSecret: 'jSgM7xX3FkGKMgglERrc2MK8',
+  location: server.info.uri
+});
   server.views({
       engines: {
           html: require('handlebars')
@@ -86,7 +96,7 @@ const start = async () => {
         tags        : ['user', 'auth', 'session', 'login'],
         description : 'Begin a user session.',
         auth        : {
-            strategy : 'twitter',
+            strategy : 'google',
             mode     : 'try'
         },
 
