@@ -42,9 +42,21 @@ const start = async () => {
 
   server.auth.strategy('twitter', 'bell', {
     provider: 'twitter',
+    scope(request) {
+
+      const scopes = ['public_profile', 'email'];
+      if (request.query.wantsSharePermission) {
+        scopes.push('publish_actions');
+      }
+      return scopes;
+    },
+    config: {
+      getMethod: 'account/verify_credentials',
+      getParams: {include_email:'true' }//doesn't work without quotes!
+    },
     password: 'cookie_encryption_password_secure',
-    clientId: 'pZo5K4IwxSjyfcfyQuupFpnNJ',
-    clientSecret: 'd0PbbdaqRdzCj2bFj33QzNRVefLi11novJbujjBkvzpWTj8NFk',
+    clientId: 'U3scAkQRIkfxoZc9BhDcuJbb6',
+    clientSecret: 'HSsFGPF3mETMvPS27xQCf8fCw6mOtfx4oQ5ymbYJ1dVZM8fMmE',
     isSecure: false     // Terrible idea but required if not using HTTPS especially if developing locally
 });
 
@@ -87,18 +99,23 @@ const start = async () => {
           //Just store a part of the twitter profile information in the session as an example. You could do something
           //more useful here - like loading or setting up an account (social signup).
           const profile = request.auth.credentials.profile;
+          console.log(profile);
   
           request.cookieAuth.set({
             twitterId: profile.id,
             username: profile.username,
-            displayName: profile.displayName
+            displayName: profile.displayName,
+            //get the users email
+            email: profile.raw.email
           });
-  
+
           return reply.redirect('/authed');
         }
       }
     });
   
+    //NEED TO CHECK AGAINST DATABASE, IF USER NOT IN DATABASE
+    //ADD USER TO DATABASE AND LOGIN
     server.route({
       method: 'GET',
       path: '/authed',
@@ -110,7 +127,7 @@ const start = async () => {
         handler: function(request, reply) {
   
           //Return a message using the information from the session
-          return ('Hello, ' + request.auth.credentials.displayName + '!');
+          return ('Hello, ' + request.auth.credentials.email + '!');
         }
       }
     });
