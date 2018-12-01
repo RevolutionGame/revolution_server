@@ -2,7 +2,7 @@ var Hapi = require('hapi');
 
 var server = new Hapi.Server({
     port: (process.env.PORT || 3004),
-    host: '0.0.0.0',
+    host: 'revtest2018.herokuapp.com',
     routes: { cors: true }
 });
 
