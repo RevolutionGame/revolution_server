@@ -21,7 +21,7 @@ var models = require('./models');
 //server start test
 const start = async () => {
 
-  await server.register(  [   require('vision'), require('bell'), require('hapi-auth-cookie')  ] );
+  await server.register(  [ require('bell'), require('hapi-auth-cookie')  ] );
 
   //server cookie strategy
   server.auth.strategy('session', 'cookie', {
@@ -60,13 +60,6 @@ server.auth.strategy('google', 'bell', {
   clientSecret: 'jSgM7xX3FkGKMgglERrc2MK8',
   location: server.info.uri
 });
-  server.views({
-      engines: {
-          html: require('handlebars')
-      },
-      relativeTo: __dirname,
-      path: 'templates'
-  });
 
   server.route({
       method: 'GET',
