@@ -17,23 +17,21 @@ var routes = require('./routes');
 
 var models = require('./models');
 
+//MOVED FOR LOOP OF ROUTE REGISTERING 
 
-for (var route in routes) {
-    server.route(routes[route]);
-  }
+
   //server.connection({ routes: { cors: true } })
 
   var io = require('socket.io')(server.listener); 
   var controllerExportMethods = require('./controllers/game_controller');
   controllerExportMethods.socketInfo(server, io);
 
-//**SERVER OAUTH TESTING AREA*/
-
+//***********SERVER OAUTH TESTING AREA*****************/
 const start = async () => {
 
   await server.register(  [   require('vision'), require('bell'), require('hapi-auth-cookie')  ] );
 
-
+  //server cookie strategy
   server.auth.strategy('session', 'cookie', {
     password: 'secret_cookie_encryption_password', //Use something more secure in production
     redirectTo: '/auth/twitter', //If there is no session, redirect here
@@ -89,40 +87,6 @@ server.auth.strategy('google', 'bell', {
   });
 
     //Setup the routes (this could be done in an own file but for the sake of simplicity isn't)
-    server.route({
-      method: '*',
-      path: '/auth/twitter',
-      config : {
-        tags        : ['user', 'auth', 'session', 'login'],
-        description : 'Begin a user session.',
-        auth        : {
-            strategy : 'google',
-            mode     : 'try'
-        },
-
-        handler: function(request, reply) {
-  
-          if (!request.auth.isAuthenticated) {
-            return ('Authentication failed: ' + request.auth.error.message);
-          }
-  
-          //Just store a part of the twitter profile information in the session as an example. You could do something
-          //more useful here - like loading or setting up an account (social signup).
-          const profile = request.auth.credentials.profile;
-          console.log(profile);
-  
-          request.cookieAuth.set({
-            twitterId: profile.id,
-            username: profile.username,
-            displayName: profile.displayName,
-            //get the users email
-            email: profile.raw.email
-          });
-
-          return reply.redirect('/authed');
-        }
-      }
-    });
   
     //NEED TO CHECK AGAINST DATABASE, IF USER NOT IN DATABASE
     //ADD USER TO DATABASE AND LOGIN
@@ -141,6 +105,11 @@ server.auth.strategy('google', 'bell', {
         }
       }
     });
+
+    //REGISTER ROUTES TO SERVER FROM ROUTES FOLDER
+    for (var route in routes) {
+      server.route(routes[route]);
+    }
 
   server.start(function()
 { 

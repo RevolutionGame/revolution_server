@@ -64,6 +64,63 @@ PlayerController.prototype = (function(){
         return getPlayer;
     }
 
+
+    //********************* NEW ********************/
+    //AUTH LOGIN
+    //log in players using Oauth info
+    //use user email/name obtained from oauth request to 
+    //create/login user
+    function authLogin(request, h){
+
+        var playerEmail = request.auth.credentials.profile.raw.email;
+
+        var getPlayer = new Promise(function(resolve, reject) {
+
+        //console logging
+        console.log('made it to auth login, will now display email');
+        console.log(request.auth.credentials.profile.raw.name);
+
+        Player.findOne({ where: {email: request.auth.credentials.email},include:[{model: models.playerAttrs, as: 'PlayerAttrs'}]})
+        .then((player => {
+            if(player != null){
+                    successData.msg = "player found";
+                    successData.data = player;
+                    resolve(successData);
+
+            }else{
+                //else player not found, add player to database and then return
+                //player as logged in
+                errorData.error = "email not found, adding oauthed player to database to login";
+                var playerEmail = request.auth.credentials.profile.raw.email;
+                var playerFullName = request.auth.credentials.profile.raw.name;
+                var playerUsername = request.auth.credentials.profile.displayName;
+                var playerCellNumber = 'OAUTHED';
+                var hashPass = 'OAUTHED';
+
+                //CREATE THE PLAYER
+                Player.create({ email: playerEmail, password_hash: hashPass, name:playerFullName, cell_number: playerCellNumber, username:playerUsername }).then(player => {
+
+                    player.createPlayerAttrs({"deviceToken":null}); 
+
+                    successData.msg = "player created";
+                    successData.data = player
+                    resolve(successData);
+                  }).catch(function(err) {
+                    // print the error details
+                    errorData.error = "Username already exists"
+                    resolve(errorData);
+                });
+            }
+
+            
+        })
+      );
+
+        
+    });
+        return getPlayer;
+    }
+
     function create(request, h){
 
         var playerEmail = request.payload.email;
@@ -105,11 +162,12 @@ PlayerController.prototype = (function(){
         
         
         return getPlayer;
-    }
+    }//end create player
 
     return {
         login: login,
-        create: create
+        create: create,
+        authLogin: authLogin
     }
 })();
 
