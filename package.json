@@ -19,9 +19,11 @@
   "homepage": "https://github.com/RevolutionGame/revolution_server#readme",
   "dependencies": {
     "async-lock": "^1.1.3",
+    "bell": "^9.4.0",
     "crypto": "^1.0.1",
     "fs": "0.0.1-security",
     "hapi": "^17.6.0",
+    "hapi-auth-cookie": "^9.1.0",
     "joi": "^13.7.0",
     "mysql2": "^1.6.1",
     "node-uuid": "^1.4.8",
