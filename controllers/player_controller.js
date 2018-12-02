@@ -149,7 +149,7 @@ PlayerController.prototype = (function(){
                     resolve(successData);
                   }).catch(function(err) {
                     // print the error details
-                    errorData.error = "Username already exists"
+                    errorData.error = err;
                     resolve(errorData);
                 });
             }
