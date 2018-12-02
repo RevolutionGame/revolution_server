@@ -58,7 +58,7 @@ server.auth.strategy('google', 'bell', {
   isSecure: false,
   clientId: '678432058435-i32ca9r52summcjtht1ams6a6j45davf.apps.googleusercontent.com',
   clientSecret: 'jSgM7xX3FkGKMgglERrc2MK8',
-  location: 'http://revtest2018.herokuapp.com/auth/google'
+  location: 'http://revtest2018.herokuapp.com'
 });
 
   server.route({
