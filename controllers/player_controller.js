@@ -154,7 +154,7 @@ PlayerController.prototype = (function(){
                   }).catch(function(err) {
                     // print the error details
                     errorData.error = err;
-                    resolve('FAILED TRYING TO CREATE PLAYER!:  ' + errorData);
+                    resolve(errorData);
                 });
             }
 
