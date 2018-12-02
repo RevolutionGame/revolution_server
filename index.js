@@ -27,7 +27,7 @@ const start = async () => {
   server.auth.strategy('session', 'cookie', {
     password: 'secret_cookie_encryption_password', //Use something more secure in production
     redirectTo: '/auth/twitter', //If there is no session, redirect here
-    isSecure: false //Should be set to true (which is the default) in production
+    isSecure: true //Should be set to true (which is the default) in production
 });
 
   //TWITTER AUTH STRATEGY
@@ -48,14 +48,14 @@ const start = async () => {
     password: 'cookie_encryption_password_secure',
     clientId: 'U3scAkQRIkfxoZc9BhDcuJbb6',
     clientSecret: 'HSsFGPF3mETMvPS27xQCf8fCw6mOtfx4oQ5ymbYJ1dVZM8fMmE',
-    isSecure: false     // Terrible idea but required if not using HTTPS especially if developing locally
+    isSecure: true     // Terrible idea but required if not using HTTPS especially if developing locally
 });
 
 //GOOGLE AUTH STRATEGY
 server.auth.strategy('google', 'bell', {
   provider: 'google',
   password: 'cookie_encryption_password_secure',
-  isSecure: false,
+  isSecure: true,
   clientId: '678432058435-i32ca9r52summcjtht1ams6a6j45davf.apps.googleusercontent.com',
   clientSecret: 'jSgM7xX3FkGKMgglERrc2MK8',
   location: server.info.uri
