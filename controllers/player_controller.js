@@ -122,14 +122,17 @@ PlayerController.prototype = (function(){
         console.log('made it to auth login, will now display email');
         console.log(request.auth.credentials.profile.raw.name);
 
+        console.log('checking to see if player email exist.');
         Player.findOne({ where: {email: request.auth.credentials.email},include:[{model: models.playerAttrs, as: 'PlayerAttrs'}]})
         .then((player => {
             if(player != null){
+                    console.log('Found player email in DB');
                     successData.msg = "player found";
                     successData.data = player;
                     resolve(successData);
 
             }else{
+                console.log('Player email not found IN DB');
                 //else player not found, add player to database and then return
                 //player as logged in
                 errorData.error = "email not found, adding oauthed player to database to login";
@@ -140,6 +143,7 @@ PlayerController.prototype = (function(){
                 var hashPass = 'OAUTHED';
 
                 //CREATE THE PLAYER
+                console.log('inserting new player into db.');
                 Player.create({ email: playerEmail, password_hash: hashPass, name:playerFullName, cell_number: playerCellNumber, username:playerUsername }).then(player => {
 
                     player.createPlayerAttrs({"deviceToken":null}); 
@@ -150,7 +154,7 @@ PlayerController.prototype = (function(){
                   }).catch(function(err) {
                     // print the error details
                     errorData.error = err;
-                    resolve(errorData);
+                    resolve('FAILED TRYING TO CREATE PLAYER!:  ' + errorData);
                 });
             }
 
