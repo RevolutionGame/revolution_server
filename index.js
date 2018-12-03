@@ -4,7 +4,7 @@ const WebSocket = require('ws');
 
 var server = new Hapi.Server({
     port: (process.env.PORT || 3004),
-    host: '0.0.0.0',
+    host: 'localhost',
     routes: { cors: true }
 });
 
@@ -61,6 +61,16 @@ server.auth.strategy('google', 'bell', {
   clientId: '678432058435-i32ca9r52summcjtht1ams6a6j45davf.apps.googleusercontent.com',
   clientSecret: 'jSgM7xX3FkGKMgglERrc2MK8',
   location: 'http://revtest2018.herokuapp.com'
+});
+
+//FACEBOOK AUTH STRATEGY
+server.auth.strategy('facebook', 'bell', {
+  provider: 'facebook',
+  password: 'cookie_encryption_password_secure',
+  isSecure: false,
+  clientId: '384144609021240',
+  clientSecret: 'c253c46c2a227d98c0d6c8b0b579ce8b',
+  location: server.info.uri
 });
 
   server.route({
