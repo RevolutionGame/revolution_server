@@ -1,5 +1,7 @@
 var Hapi = require('hapi');
 
+const WebSocket = require('ws');
+
 var server = new Hapi.Server({
     port: (process.env.PORT || 3004),
     host: 'localhost',
