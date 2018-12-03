@@ -133,13 +133,14 @@ PlayerController.prototype = (function(){
 
             }else{
                 console.log('Player email not found IN DB');
+                console.log(player)
                 //else player not found, add player to database and then return
                 //player as logged in
                 errorData.error = "email not found, adding oauthed player to database to login";
                 var playerEmail = request.auth.credentials.profile.raw.email;
                 var playerFullName = request.auth.credentials.profile.raw.name;
                 var playerUsername = request.auth.credentials.profile.displayName;
-                var playerCellNumber = 'OAUTHED';
+                var playerCellNumber = '0000000000';
                 var hashPass = 'OAUTHED';
 
                 //CREATE THE PLAYER
