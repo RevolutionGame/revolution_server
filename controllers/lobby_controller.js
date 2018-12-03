@@ -6,6 +6,8 @@ var uuid = require('node-uuid');
 
 var models = require('../models');
 
+const WebSocket = require('ws');
+
 
 function LobbyController(){};
 
