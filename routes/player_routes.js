@@ -38,7 +38,7 @@ module.exports = function() {
               handler: function(request, reply) {
         
                 if (!request.auth.isAuthenticated) {
-                  return ('Authentication failed: ' + request.auth.error.message);
+                  return ('!Authentication failed: ' + request.auth.error.message);
                 }
         
                 //Just store a part of the twitter profile information in the session as an example. You could do something
