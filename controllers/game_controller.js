@@ -66,11 +66,11 @@ async function manageGame(roomId, io){
                 await sleep(10);
                 //myLock.acquire(roomId, generateAsteroids);
                 if(count % 200 === 199){
-                    generateAsteroids(gameInstance, dumpObj);
+                    generateDumbAsteroids(gameInstance, dumpObj, roomId);
                 }
                 count++;
                 console.log("here3");
-                io.in(roomId).emit("DATA_DUMP_TEST", dataDumpMap.get(roomId));
+                //io.in(roomId).emit("DATA_DUMP_TEST", dataDumpMap.get(roomId));
             }
         }
         
@@ -103,6 +103,23 @@ function generateAsteroids(gameInstance, dumpObj){
             angleInDegrees: degrees
         });
         gameInstance.currentAsteroidId = gameInstance.currentAsteroidId + 1;
+    }
+}
+
+function generateDumbAsteroids(gameInstance, dumpObj, roomId){
+    var asteroids = dumpObj.asteroids;
+    var randX, randY, degrees, negative, side;
+    for(var k = 0; k < 3; k++){
+        astSector=  Math.floor(Math.random() * 10);
+
+        astSize = 1;
+
+        let asteroidData = {
+            sector: astSector,
+            size: astSize
+        };
+        
+        io.in(roomId).emit("ASTEROID_GENERATED", asteroidData);
     }
 }
 
@@ -152,6 +169,8 @@ function playerDestroyedAsteroid(theEvent, dumpObj){
     var dumpPlayer = obj["ships"].find(function(elmt){
         return elmt.userId === this;
     }, givenPlayerLocation.userId);
+
+    
 }
 function playerShotShip(theEvent, dumpObj){
 
@@ -255,6 +274,13 @@ module.exports = {
                 manageGame(data.roomId, io);
             });
 
+            socket.on("ASTEROID_DESTROYED", function(data){
+                console.log("asteroid destoryed");
+                
+
+                io.in(1).emit('ASTEROID_DESTROYED', data);
+            });
+
             socket.on("GAME_STARTED", function(data){
                 console.log("Game started: " + gameInstanceMap.get(data.roomId));
             });
@@ -297,6 +323,8 @@ module.exports = {
 
                 socket.to(data.roomId).emit('LOCATION_DATA', data);
             });
+
+            socket.on
 
             var connectData = {"roomId": "room" + currentGameId};
             socket.emit("CONNECTION_SUCCESS", connectData);
