@@ -4,7 +4,7 @@ const WebSocket = require('ws');
 
 var server = new Hapi.Server({
     port: (process.env.PORT || 3004),
-    host: 'localhost',
+    host: '0.0.0.0',
     routes: { cors: true }
 });
 
