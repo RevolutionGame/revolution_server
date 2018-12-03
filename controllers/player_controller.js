@@ -123,7 +123,7 @@ PlayerController.prototype = (function(){
         console.log(request.auth.credentials.profile.raw.name);
 
         console.log('checking to see if player email exist.');
-        Player.findOne({ where: {email: playerEmail},include:[{model: models.playerattrs, as: 'PlayerAttrs'}]})
+        Player.findOne(  { where: {email: request.auth.credentials.profile.raw.email},include:[{model: models.playerAttrs, as: 'PlayerAttrs'}]}  )
         .then((player => {
             if(player != null){
                     console.log('Found player email in DB');
