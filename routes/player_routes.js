@@ -25,7 +25,7 @@ module.exports = function() {
           //*****************NEW AUTH ADDON ROUTE **********************/
 
           {
-            method: '*',
+            method: 'GET',
             path: '/auth/twitter',
             config : {
               tags        : ['user', 'auth', 'session', 'login'],
@@ -66,7 +66,7 @@ module.exports = function() {
           },
 
           {
-            method: '*',
+            method: 'GET',
             path: '/auth/google',
             config : {
               tags        : ['user', 'auth', 'session', 'login'],
@@ -106,7 +106,7 @@ module.exports = function() {
           },
           
           {
-            method: '*',
+            method: 'GET',
             path: '/auth/facebook',
             config : {
               tags        : ['user', 'auth', 'session', 'login'],
