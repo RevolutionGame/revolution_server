@@ -73,6 +73,17 @@ server.auth.strategy('facebook', 'bell', {
   location: server.info.uri
 });
 
+  server.route({
+      method: 'GET',
+      path: '/',
+      handler: function (request, h) {
+
+        
+        console.log('testing3');
+          return server.info.uri;
+      }
+  });
+
     //Setup the routes (this could be done in an own file but for the sake of simplicity isn't)
   
     //NEED TO CHECK AGAINST DATABASE, IF USER NOT IN DATABASE
