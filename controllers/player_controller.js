@@ -32,7 +32,7 @@ PlayerController.prototype = (function(){
     var getPlayer = new Promise(function(resolve, reject) {
 
 
-        Player.findOne({ where: {email: request.payload.email},include:[{model: models.playerAttrs, as: 'PlayerAttrs'}]})
+        Player.findOne({ where: {email: request.payload.email},include:[{model: models.playerAttrs, as: 'PlayerAttrs'},{model: models.playerScores, as: 'PlayerScore'} ]})
         .then((player => {
             if(player != null){
                 if(player.password_hash == encrypt(request.payload.pass)){
@@ -107,6 +107,73 @@ PlayerController.prototype = (function(){
         return getPlayer;
     }
 
+    function addScore(request, h){
+
+        var playerEmail = request.payload.email;
+        var playerScore = request.payload.score;
+
+
+        var addPlayerScore = new Promise(function(resolve, reject) {
+
+
+            Player.findOne({ where: {email: playerEmail} })
+            .then((player => {
+    
+    
+                player.createPlayerScore({"score":playerScore}); 
+    
+                        successData.msg = "player created";
+                        successData.data = player
+                        resolve(successData);
+                    
+    
+                
+                
+            })
+          );
+    
+            
+        });
+
+        return addPlayerScore;
+
+    }
+
+    function updateField(request, h){
+
+        var field = request.payload.field;
+        var value = request.payload.value;
+        var playerEmail = request.payload.email;
+
+    var changePlayerField = new Promise(function(resolve, reject) {
+
+
+        Player.findOne({ where: {email: playerEmail} })
+        .then((player => {
+
+            if(player != null){
+
+                player[field] = value
+
+                player.save().then(() => {
+
+                    resolve({msg:"Player saved"});
+                })
+                
+            }else{
+                resolve({error:"An error occurred"});
+
+            }
+            
+        })
+      );
+
+        
+    });
+
+        return changePlayerField;
+    }
+
         //********************* NEW ********************/
     //AUTH LOGIN
     //log in players using Oauth info
@@ -171,7 +238,9 @@ PlayerController.prototype = (function(){
     return {
         login: login,
         create: create,
-        authLogin: authLogin
+        authLogin: authLogin,
+        updateField: updateField,
+        addScore: addScore
     }
 })();
 

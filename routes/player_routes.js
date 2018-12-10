@@ -21,6 +21,20 @@ module.exports = function() {
               handler: playerController.create
             }
           },
+          {
+            method: 'POST',
+            path:'/v1/player/update',
+            config:{
+              handler:playerController.updateField
+            }
+          },
+          {
+            method: 'POST',
+            path:'/v1/player/addScore',
+            config:{
+              handler:playerController.addScore
+            }
+          },
         
           //*****************NEW AUTH ADDON ROUTE **********************/
 

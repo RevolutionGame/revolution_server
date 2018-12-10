@@ -27,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
                 unique: true
                 },
             password_hash: DataTypes.STRING,
+            shiptype:{
+                type: DataTypes.INTEGER,
+                defaultValue: 0
+            },
+            weapontype:{
+                type: DataTypes.INTEGER,
+                defaultValue: 0
+            },
             password:{
                 type: DataTypes.VIRTUAL,
                 set:function(val) {
@@ -43,6 +51,8 @@ module.exports = (sequelize, DataTypes) => {
             Player.belongsToMany(models.ships, { through: models.playerShips });
 
             Player.hasOne(models.playerAttrs, { as: 'PlayerAttrs' });
+
+            Player.hasMany(models.playerScores, {as: 'PlayerScore'});
 
             Player.belongsToMany(models.weapons, { through: models.playerWeapons });
 
