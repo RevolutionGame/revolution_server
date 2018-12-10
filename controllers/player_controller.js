@@ -40,6 +40,7 @@ PlayerController.prototype = (function(){
                 if(player.password_hash == encrypt(request.payload.pass)){
 
                     successData.msg = "player found";
+                    player.PlayerScore = player.PlayerScore.reverse();
                     successData.data = player;
                     resolve(successData);
                 }else{
